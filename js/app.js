@@ -16,6 +16,12 @@ class Enemy {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
+  reset(){
+    this.x = 0;
+    this.y = 75 * (Math.floor(Math.random() * 3) + 1);
+    this.speed = Math.floor(Math.random() * 3) + 1;
+  }
+
 
 }
 
@@ -34,8 +40,12 @@ class Player {
 
   }
 
-  handleInput(keyCode){
+  reset() {
+    this.x = 0;
+    this.y = 75 * (Math.floor(Math.random() * 4) + 4);
+  }
 
+  handleInput(keyCode){
     switch (keyCode) {
       case 'left':
         this.x  = (this.x - 110 < 0) ? this.x : this.x - 110;
