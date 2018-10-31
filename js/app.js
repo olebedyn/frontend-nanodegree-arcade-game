@@ -8,7 +8,12 @@ class Enemy {
   }
 
   update(dt) {
-    this.x += 101 * dt * this.speed;
+    if (this.x < 505) {
+      this.x += 101 * dt * this.speed
+    } else {
+      this.x = 0;
+      this.speed = Math.floor(Math.random() * 3) + 1;
+    }
   }
 
 
@@ -36,13 +41,13 @@ class Player {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
-  update(dt) {
-
-  }
-
   reset() {
     this.x = 0;
     this.y = 75 * (Math.floor(Math.random() * 4) + 4);
+  }
+
+  update() {
+    
   }
 
   handleInput(keyCode){
@@ -69,7 +74,7 @@ class Player {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let allEnemies = [];
-for (let i=0; i<3;i++){
+for (let i=0; i<6;i++){
   allEnemies[i] = new Enemy();
 }
 let player = new Player();

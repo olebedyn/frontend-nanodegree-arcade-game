@@ -80,6 +80,7 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
+        checkIfGameOver();
     }
 
     /* This is called by the update function and loops through all of the
@@ -98,10 +99,19 @@ var Engine = (function(global) {
 
     function checkCollisions() {
       allEnemies.forEach(function(enemy) {
-        if (enemy.x == player.x && enemy.y ==player.y) {
-          reset();
+        if ((Math.abs(enemy.x - player.x) < 30 ) && (Math.abs(enemy.y - player.y)) < 10) {
+          console.log("Game over");
+          setTimeout(reset(), 1000);
         }
       });
+    }
+
+    function checkIfGameOver() {
+      if (player.y === 0) {
+        console.log("You've won");
+        win.cancelAnimationFrame(id);
+        setTimeout(reset(), 1000);
+      }
     }
 
     /* This function initially draws the "game level", it will then call

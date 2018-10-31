@@ -1,3 +1,16 @@
 body {
     text-align: center;
 }
+
+.gameover {
+  display: flex;
+  background-color: #000000;
+  width: 505px;
+  height: 606px;
+  position: absolute;
+  top : 0;
+  color: white;
+  justify-content:center;
+   align-content:center;
+   flex-direction:column;
+}
