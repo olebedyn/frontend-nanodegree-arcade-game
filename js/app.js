@@ -1,18 +1,22 @@
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 class Enemy {
   constructor(){
     this.sprite = 'images/enemy-bug.png';
     this.x = 0;
-    this.y = 75 * (Math.floor(Math.random() * 3) + 1);
-    this.speed = Math.floor(Math.random() * 3) + 1;
+    this.y = 50 * getRandomInt(1,3)
+    this.speed = getRandomInt(1, 3)
   }
 
   update(dt) {
     if (this.x < 505) {
-      this.x += 101 * dt * this.speed
+      this.x += 75 * dt * this.speed
     } else {
       this.x = 0;
-      this.speed = Math.floor(Math.random() * 3) + 1;
+      this.speed = getRandomInt(1, 3)
     }
   }
 
@@ -23,18 +27,18 @@ class Enemy {
 
   reset(){
     this.x = 0;
-    this.y = 75 * (Math.floor(Math.random() * 3) + 1);
-    this.speed = Math.floor(Math.random() * 3) + 1;
+    this.y = 75 * getRandomInt(1, 3)
+    this.speed = getRandomInt(1, 3)
   }
 
 
 }
 
 class Player {
-  constructor() {
-    this.sprite = 'images/char-cat-girl.png';
-    this.x = 0;
-    this.y = 75 * (Math.floor(Math.random() * 4) + 4);
+  constructor(sprite) {
+    this.sprite = sprite;
+    this.x = 101 * getRandomInt(0, 4);
+    this.y = 83 * getRandomInt(4, 5)
   }
 
   render() {
@@ -42,27 +46,26 @@ class Player {
   }
 
   reset() {
-    this.x = 0;
-    this.y = 75 * (Math.floor(Math.random() * 4) + 4);
+    this.x = 101 * getRandomInt(0, 4);
+    this.y = 83 * getRandomInt(4, 5)
   }
 
   update() {
-    
   }
 
   handleInput(keyCode){
     switch (keyCode) {
       case 'left':
-        this.x  = (this.x - 110 < 0) ? this.x : this.x - 110;
+        this.x  = (this.x - 101 < 0) ? this.x : this.x - 101;
         break;
       case 'up':
-        this.y  = (this.y - 75 < 0) ? this.y : this.y - 75;
+        this.y  = (this.y - 83 < 0) ? this.y : this.y - 83;
         break;
       case 'right':
-        this.x  = (this.x + 110 > ctx.canvas.width) ? this.x : this.x + 110;
+        this.x  = (this.x + 101 >= ctx.canvas.width) ? this.x : this.x + 101;
         break;
       case 'down':
-        this.y  = (this.y + 75 > 375) ? this.y : this.y + 75;
+        this.y  = (this.y + 82 >= 420) ? this.y : this.y + 82;
         break;
     }
     this.render();
@@ -77,7 +80,14 @@ let allEnemies = [];
 for (let i=0; i<6;i++){
   allEnemies[i] = new Enemy();
 }
-let player = new Player();
+let playerSprites = [
+        'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-princess-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-horn-girl.png'
+      ]
+let player = new Player(playerSprites[getRandomInt(0,playerSprites.length - 1)]);
 
 
 

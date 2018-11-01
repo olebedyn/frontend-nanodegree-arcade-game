@@ -99,19 +99,18 @@ var Engine = (function(global) {
 
     function checkCollisions() {
       allEnemies.forEach(function(enemy) {
-        if ((Math.abs(enemy.x - player.x) < 30 ) && (Math.abs(enemy.y - player.y)) < 10) {
+        if ((Math.abs(enemy.x - player.x) < 50 ) && (Math.abs(enemy.y - player.y)) < 30) {
           console.log("Game over");
-          setTimeout(reset(), 1000);
+          reset()
         }
       });
     }
 
     function checkIfGameOver() {
-      if (player.y === 0) {
-        console.log("You've won");
-        win.cancelAnimationFrame(id);
-        setTimeout(reset(), 1000);
-      }
+      // if (player.y === 0) {
+      //   console.log("You've won");
+      //   setTimeout(reset(), 1000);
+      // }
     }
 
     /* This function initially draws the "game level", it will then call
@@ -195,7 +194,10 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/char-cat-girl.png'
+        'images/char-cat-girl.png',
+        'images/char-princess-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-horn-girl.png'
     ]);
     Resources.onReady(init);
 
