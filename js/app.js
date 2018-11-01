@@ -3,12 +3,32 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+class GameSettings {
+  constructor() {
+    this.gameDifficulty = 1;
+    this.chosenHero = 'images/char-boy.png';
+  }
+
+  storeSettings(){
+    localStorage.setItem("gameDifficulty", this.gameDifficulty);
+    localStorage.setItem("hero", this.chosenHero;
+  }
+
+}
+
+class GameController {
+  constructor(player, enemies) {
+    this.player = player;
+    this.enemies = enemies;
+  }
+}
+
 class Enemy {
-  constructor(){
+  constructor(sprite, speed){
     this.sprite = 'images/enemy-bug.png';
-    this.x = 0;
-    this.y = 50 * getRandomInt(1,3)
-    this.speed = getRandomInt(1, 3)
+    this.x = this.initX();
+    this.y = this.initY();
+    this.speed = this.initSpeed();
   }
 
   update(dt) {
@@ -18,6 +38,19 @@ class Enemy {
       this.x = 0;
       this.speed = getRandomInt(1, 3)
     }
+  }
+
+  initX() {
+    return 0;
+  }
+
+
+  initY() {
+    return 50 * getRandomInt(1,3);
+  }
+
+  initSpeed() {
+    return getRandomInt(1, 3);
   }
 
 
@@ -37,17 +70,34 @@ class Enemy {
 class Player {
   constructor(sprite) {
     this.sprite = sprite;
-    this.x = 101 * getRandomInt(0, 4);
-    this.y = 83 * getRandomInt(4, 5)
+    this.x = this.initX();
+    this.y = this.initY();
+    this.lives = 3;
   }
 
   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
+  getLives() {
+    return this.lives;
+  }
+
+  subtractLive() {
+    this.lives--;
+  }
+
+  initX() {
+    return 101 * getRandomInt(0, 4);
+  }
+
+  initY() {
+    return 83 * getRandomInt(4, 5);
+  }
+
   reset() {
-    this.x = 101 * getRandomInt(0, 4);
-    this.y = 83 * getRandomInt(4, 5)
+    this.x = this.initX();
+    this.y = this.initY();
   }
 
   update() {
