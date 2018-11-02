@@ -3,28 +3,9 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-class GameSettings {
-  constructor() {
-    this.gameDifficulty = 1;
-    this.chosenHero = 'images/char-boy.png';
-  }
-
-  storeSettings(){
-    localStorage.setItem("gameDifficulty", this.gameDifficulty);
-    localStorage.setItem("hero", this.chosenHero;
-  }
-
-}
-
-class GameController {
-  constructor(player, enemies) {
-    this.player = player;
-    this.enemies = enemies;
-  }
-}
 
 class Enemy {
-  constructor(sprite, speed){
+  constructor(){
     this.sprite = 'images/enemy-bug.png';
     this.x = this.initX();
     this.y = this.initY();
@@ -36,6 +17,7 @@ class Enemy {
       this.x += 75 * dt * this.speed
     } else {
       this.x = 0;
+      this.y = this.initY();
       this.speed = getRandomInt(1, 3)
     }
   }
@@ -68,11 +50,15 @@ class Enemy {
 }
 
 class Player {
-  constructor(sprite) {
-    this.sprite = sprite;
+  constructor(sprite = 'images/char-cat-girl.png') {
+    this.sprite = 'images/char-cat-girl.png';
     this.x = this.initX();
     this.y = this.initY();
     this.lives = 3;
+  }
+
+  setSprite(sprite) {
+    this.sprite = sprite;
   }
 
   render() {
@@ -83,7 +69,7 @@ class Player {
     return this.lives;
   }
 
-  subtractLive() {
+  die() {
     this.lives--;
   }
 
@@ -122,23 +108,50 @@ class Player {
   }
 }
 
+// function selectHero(obj) {
+//   document.querySelector('.hero-avatar.selected').classList.remove('selected');
+//   obj.classList.add('selected');
+//   settings.selectHero = obj.getAttribute('src');
+// }
+
+// function startGame() {
+//   init();
+//   settings.difficulty = document.getElementById('range').value;
+//   localStorage.setItem("selectedHero", settings.selectHero);
+//   localStorage.setItem("gameDifficulty", settings.difficulty);
+//   document.getElementById('overlay').classList.remove('visible');
+//   for (let i=0; i < gameDifficultyToGameSettings(settings.difficulty).numEnemies; i++){
+//     allEnemies[i] = new Enemy();
+//   }
+//   let player = new Player(settings.selectHero);
+// }
+
+
+function gameDifficultyToGameSettings(selectedDifficulty){
+  switch (selectedDifficulty) {
+    case "1":
+      return 3
+      break;
+    case "2":
+      return 6
+      break;
+    case "3":
+      return 9
+      break;
+    default:
+      return 3
+  }
+}
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let allEnemies = [];
-for (let i=0; i<6;i++){
-  allEnemies[i] = new Enemy();
-}
-let playerSprites = [
-        'images/char-boy.png',
-        'images/char-cat-girl.png',
-        'images/char-princess-girl.png',
-        'images/char-pink-girl.png',
-        'images/char-horn-girl.png'
-      ]
-let player = new Player(playerSprites[getRandomInt(0,playerSprites.length - 1)]);
-
+for (let i=0; i < 6; i++){
+    allEnemies[i] = new Enemy();
+  }
+let player = new Player();
 
 
 // This listens for key presses and sends the keys to your

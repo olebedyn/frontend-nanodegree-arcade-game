@@ -13,8 +13,53 @@ body {
   left: 0;
   right: 0;
   visibility: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  color: white;
 }
 
+.hero-list, .difficulty-level, .controls {
+  width: 100%;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ul.heros {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style-type: none;
+}
+
+li.hero-avatar {
+  width: 50%;
+  height: 100px;
+  padding-top: 40px;
+}
+
+img.hero-avatar {
+  width: 100px;
+  height: 150px;
+  opacity: 0.5;
+}
+
+img.hero-avatar.selected {
+  opacity: 1;
+}
+
+img.hero-avatar {
+  width: 100px;
+  height: 150px;
+  opacity: 0.5;
+}
 .overlay.visible {
   visibility: visible;
+}
+
+ul.range-labels {
+    list-style-type: none;
 }
