@@ -16,34 +16,23 @@ body {
   display: flex;
   flex-wrap: wrap;
   color: white;
+  font-size: 20px;
 }
 
 .hero-list, .difficulty-level, .controls {
   width: 100%;
 }
 
-.controls {
+div.heros {
   display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-ul.heros {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  list-style-type: none;
-}
-
-li.hero-avatar {
-  width: 50%;
-  height: 100px;
-  padding-top: 40px;
+div.hero-avatar {
+  width: 25%;
+  height: 130px;
 }
 
 img.hero-avatar {
-  width: 100px;
-  height: 150px;
   opacity: 0.5;
 }
 
@@ -51,15 +40,116 @@ img.hero-avatar.selected {
   opacity: 1;
 }
 
-img.hero-avatar {
-  width: 100px;
-  height: 150px;
-  opacity: 0.5;
+.visible {
+  visibility: visible !important;
 }
-.overlay.visible {
-  visibility: visible;
+
+.invisible {
+  display: none;
+}
+
+input#range {
+  width: 50%;
 }
 
 ul.range-labels {
     list-style-type: none;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3px;
+    padding: 0;
+    width: 75%;
+}
+
+ul.range-labels > li {
+  width: 33.3%;
+}
+
+.start-game {
+  height: 50px;
+  width: 100px;
+  border-radius: 5%;
+  background-color: white;
+  font-size: 14px;
+}
+
+.lives {
+  background-color: black;
+  top: 12px;
+  height: 50px;
+  width: 505px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  visibility: hidden;
+}
+
+.lives-screen, .won-screen {
+  position: absolute;
+  top: 50px;
+  height: 550px;
+  width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  visibility: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.lives-screen {
+    background-color: black;
+}
+
+.won-screen {
+  background-color: pink;
+  color: white;
+}
+
+.alive-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+}
+
+.dead-menu {
+  position: absolute;
+}
+
+.won-menu {
+  background-color: pink;
+  color: black;
+}
+
+.lives-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.heart-small {
+  width: 50px;
+  height: 50px;
+}
+
+.heart-big {
+  width: 70px;
+  height: 70px;
+}
+
+.hero {
+  width: 101px;
+  height: 171px;
+}
+
+.x-text, .game-over {
+  font-size: 25px;
+  color: white;
 }

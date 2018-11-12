@@ -92,33 +92,26 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
-        allEnemies.forEach(function(enemy) {
+        game.getEnemies().forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
+        game.getPlayer().update();
     }
 
     function checkCollisions() {
-      allEnemies.forEach(function(enemy) {
-        if ((Math.abs(enemy.x - player.x) < 50 ) && (Math.abs(enemy.y - player.y)) < 30) {
-          reset();
-        }
-      });
+      const player = game.getPlayer();
+      if (player.getY() > 0) { //if player hasn't reached the top yet
+        game.getEnemies().forEach(function(enemy) {
+          if ((Math.abs(enemy.x - player.getX()) < 50) && (Math.abs(enemy.y - player.getY())) < 50) { // if collision occurs
+            game.showLivesMenu(); //show menu with remaining hero lives
+          }
+        });
+      }
     }
 
     function checkIfWon() {
-      if (player.y === 0) {
-        gameOver(true);
-      }
-    }
-
-
-    function gameOver(ifWon) {
-      if (ifWon) {
-        //show congrats screen
-      }
-      else {
-        // show game over screen
+      if (game.getPlayer().getY() === 0) { //show congrats screen if hero reached the top
+        game.showCongratsScreen();
       }
     }
 
@@ -175,11 +168,14 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        allEnemies.forEach(function(enemy) {
-            enemy.render();
-        });
-        //
-        player.render();
+        if(game.getEnemies().length > 0) {
+          game.getEnemies().forEach(function(enemy) {
+              enemy.render();
+          });
+          //
+          game.getPlayer().render();
+        }
+
     }
 
     /* This function does nothing but it could have been a good place to
@@ -187,6 +183,7 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
+
     }
 
     /* Go ahead and load all of the images we know we're going to need to

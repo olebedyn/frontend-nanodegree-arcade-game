@@ -9,15 +9,41 @@
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
-    <!-- <div class="overlay" id="overlay">
+    <div class="lives" id="lives">
+      <img class="heart-small active" src="images/Heart.png">
+      <img class="heart-small active" src="images/Heart.png">
+      <img class="heart-small active" src="images/Heart.png">
+    </div>
+    <div class="lives-screen" id="lives-screen">
+      <div class="alive-menu">
+        <div class="item">
+          <img class="hero" src="images/char-cat-girl.png">
+        </div>
+        <div class="item">
+          <p class="x-text">X</p>
+        </div>
+        <div class="lives-item">
+          <img class="heart-big active" src="images/Heart.png">
+          <img class="heart-big active" src="images/Heart.png">
+          <img class="heart-big active" src="images/Heart.png">
+        </div>
+      </div>
+      <div class="dead-menu invisible">
+        <p class="game-over">Game Over</p>
+      </div>
+    </div>
+    <div class="won-screen invisible" id="won-menu">
+      <p class="game-over">Congratulations! You've are smarter than your enemies :)</p>
+    </div>
+    <div class="overlay visible" id="overlay">
       <div class="hero-list">
         <p>Select your hero:</p>
-        <ul class="heros">
-          <li class="hero-avatar"><img class="hero-avatar selected" src="images/char-cat-girl.png" onclick="selectHero(this)"></li>
-          <li class="hero-avatar"><img class="hero-avatar" src="images/char-princess-girl.png" onclick="selectHero(this)"></li>
-          <li class="hero-avatar"><img class="hero-avatar" src="images/char-pink-girl.png" onclick="selectHero(this)"></li>
-          <li class="hero-avatar"><img class="hero-avatar" src="images/char-horn-girl.png" onclick="selectHero(this)"></li>
-        </ul>
+        <div class="heros">
+          <div class="hero-avatar"><img class="hero-avatar selected" src="images/char-cat-girl.png" onclick="game.selectHero(this)"></div>
+          <div class="hero-avatar"><img class="hero-avatar" src="images/char-princess-girl.png" onclick="game.selectHero(this)"></div>
+          <div class="hero-avatar"><img class="hero-avatar" src="images/char-pink-girl.png" onclick="game.selectHero(this)"></div>
+          <div class="hero-avatar"><img class="hero-avatar" src="images/char-horn-girl.png" onclick="game.selectHero(this)"></div>
+        </div>
       </div>
       <div class="difficulty-level">
         <p>Select difficulty level:</p>
@@ -29,8 +55,8 @@
         </ul>
       </div>
       <div class="controls">
-          <button type="button" name="startGame" onclick="startGame()">Start Game</button>
+          <button type="button" name="startGame" class="start-game" onclick="game.startGame()">Start Game</button>
       </div>
-    </div> -->
+    </div>
 </body>
 </html>
