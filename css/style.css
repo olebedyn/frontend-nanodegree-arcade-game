@@ -45,7 +45,7 @@ img.hero-avatar.selected {
 }
 
 .invisible {
-  display: none;
+  display: none !important;
 }
 
 input#range {

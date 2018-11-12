@@ -8,6 +8,7 @@ class Player {
     this.x = this.initX();
     this.y = this.initY();
     this.lives = 3;
+    this.movementHandler = this.handleInput.bind(this); // define handler explicitly so it's possible to remove it later on when menu is shown
   }
 
   setSprite(sprite) {
@@ -89,11 +90,11 @@ class Player {
   }
 
   blockMovement() {
-    document.removeEventListener('keyup', this.handleInput.bind(this));
+    document.removeEventListener('keyup', this.movementHandler);
   }
 
   allowMovement() {
-    document.addEventListener('keyup', this.handleInput.bind(this));
+    document.addEventListener('keyup', this.movementHandler);
   }
 }
 
@@ -174,12 +175,11 @@ class Game {
   showLivesMenu() {
     this.player.blockMovement(); //block key input handling when menu is visible so users can't play blindfolded
     this.player.die(); //decrement player lives
-    this.adjustLivesCountInMenu(); //hide lives in game menus
-    this.player.reset(); //reset players position on the field
     document.getElementById('lives-screen').classList.add('visible'); //show main lives screen
     if (this.player.getLivesCount() === 0) {  //if it's game over already
       this.showGameOverScreen();
     } else {
+      this.adjustLivesCountInMenu(); //hide lives in game menus
       document.getElementById('lives').classList.remove('visible'); //hide top lives menu
       this.continueGame(); //show new live count and continue game
     }
@@ -187,31 +187,36 @@ class Game {
 
 
   adjustLivesCountInMenu() {
-    const BIG_HEART_SELECTOR = '.heart-big.active';
-    const SMALL_HEART_SELECTOR = '.heart-small.active';
+    const BIG_HEART_SELECTOR_VISIBLE = '.heart-big.active';
+    const SMALL_HEART_SELECTOR_VISIBLE = '.heart-small.active';
 
-    let bigHearts = document.getElementById('lives-screen').querySelectorAll(BIG_HEART_SELECTOR);
-    let smallHearts = document.getElementById('lives').querySelectorAll(SMALL_HEART_SELECTOR);
+    document.getElementById('lives-screen').querySelector(BIG_HEART_SELECTOR_VISIBLE).classList.replace('active','invisible'); //remove heart from big lives screen
+    document.getElementById('lives').querySelector(SMALL_HEART_SELECTOR_VISIBLE).classList.replace('active','invisible'); //remove heart from small lives screen
+  }
 
-    if (bigHearts.length === 0 && smallHearts.length === 0) { //if game is over - re-set the count
-      for (bigHeart of bigHearts) {
-        bigHeart.classList.replace('invisible', 'active');
-      }
-      for (smallHeart of smallHearts) {
-        smallHeart.classList.replace('invisible', 'active');
-      }
-    } else {
-          document.getElementById('lives-screen').querySelector(BIG_HEART_SELECTOR).classList.replace('active','invisible'); //remove heart from big lives screen
-          document.getElementById('lives').querySelector(SMALL_HEART_SELECTOR).classList.replace('active','invisible'); //remove heart from small lives screen
+  resetLivesInMenus(){
+    const BIG_HEART_SELECTOR_INVISIBLE = '.heart-big.invisible';
+    const SMALL_HEART_SELECTOR_INVISIBLE = '.heart-small.invisible';
+
+    let bigHeartsInvisible = document.getElementById('lives-screen').querySelectorAll(BIG_HEART_SELECTOR_INVISIBLE);
+    let smallHeartsInvisible = document.getElementById('lives').querySelectorAll(SMALL_HEART_SELECTOR_INVISIBLE);
+
+    for (let bigHeart of bigHeartsInvisible) {
+      bigHeart.classList.replace('invisible', 'active');
+    }
+    for (let smallHeart of smallHeartsInvisible) {
+      smallHeart.classList.replace('invisible', 'active');
     }
   }
 
 
   showGameOverScreen() {
-    document.getElementById('lives-screen').querySelector('.alive-menu').classList.replace('visible', 'invisible');
+    document.getElementById('lives').classList.remove('visible'); //hide top lives menu
+    document.getElementById('lives-screen').querySelector('.alive-menu').classList.add('invisible');
     document.getElementById('lives-screen').querySelector('.dead-menu').classList.replace('invisible', 'visible');
     setTimeout( () => {
       document.getElementById('lives-screen').classList.remove('visible');
+      document.getElementById('lives-screen').querySelector('.dead-menu').classList.replace('visible', 'invisible');
       this.restartGame();
     } , 2000)
   }
@@ -231,7 +236,6 @@ class Game {
     setTimeout( () => {
       document.getElementById('won-menu').classList.replace('visible', 'invisible');
       this.restartGame();
-      document.getElementById('overlay').classList.add('visible');
     } , 2000)
   }
 
@@ -240,6 +244,9 @@ class Game {
     this.enemies = []; // cleanup enemies
     this.adjustLivesCountInMenu(); // reset lives icons in menus
     this.showStartMenu();
+    this.resetLivesInMenus();
+    document.getElementById('lives-screen').querySelector('.alive-menu').classList.remove('invisible');
+    document.getElementById('lives-screen').querySelector('.dead-menu').classList.replace('visible', 'invisible');
   }
 
   startGame() {

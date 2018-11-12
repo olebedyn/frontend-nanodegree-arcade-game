@@ -102,7 +102,8 @@ var Engine = (function(global) {
       const player = game.getPlayer();
       if (player.getY() > 0) { //if player hasn't reached the top yet
         game.getEnemies().forEach(function(enemy) {
-          if ((Math.abs(enemy.x - player.getX()) < 50) && (Math.abs(enemy.y - player.getY())) < 50) { // if collision occurs
+          if ((Math.abs(enemy.x - player.getX()) < 50) && (Math.abs(enemy.y - player.getY())) < 50) {
+            player.reset() // if collision occurs
             game.showLivesMenu(); //show menu with remaining hero lives
           }
         });
