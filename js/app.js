@@ -15,10 +15,6 @@ class Player {
     this.sprite = sprite;
   }
 
-  getSprite() {
-    return this.sprite;
-  }
-
   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
@@ -29,10 +25,6 @@ class Player {
 
   getLivesCount(){
     return this.lives;
-  }
-
-  setLives(livesCount = 3) {
-    this.lives = livesCount;
   }
 
   initX() {
@@ -59,7 +51,7 @@ class Player {
     }
   }
 
-  update() {
+  update() { //not sure what to put here, both coordinates update and rendering is done in handleInput
   }
 
   handleInput(e){
@@ -69,8 +61,8 @@ class Player {
         39: 'right',
         40: 'down'
     };
-
     const keyCode = allowedKeys[e.keyCode];
+
     switch (keyCode) {
       case 'left':
         this.x  = (this.x - 101 < 0) ? this.x : this.x - 101;
@@ -85,7 +77,6 @@ class Player {
         this.y  = (this.y + 83 >= 420) ? this.y : this.y + 83;
         break;
     }
-
     this.render();
   }
 
@@ -132,21 +123,28 @@ class Enemy {
   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
-
-  reset(){
-    this.x = 0;
-    this.y = 75 * getRandomInt(1, 3)
-    this.speed = getRandomInt(1, 3)
-  }
 }
 
 class Game {
-
   constructor() {
     this.player = new Player();
     this.enemies = [];
+    this.START_MENU_ID = 'overlay';
+    this.GAME_DIFFICULTY_ID = 'range';
+    this.TOP_LIVES_MENU_ID = 'lives';
+    this.SCREEN_LIVES_MENU_ID = 'lives-screen';
+    this.ALIVE_MENU_ID = 'lives-screen';
+    this.DEAD_MENU_ID = 'lives-screen';
+    this.WON_MENU_ID = 'lives-screen';
+    this.BIG_HEART_SELECTOR_INVISIBLE = '.heart-big.invisible';
+    this.SMALL_HEART_SELECTOR_INVISIBLE = '.heart-small.invisible';
+    this.BIG_HEART_SELECTOR_VISIBLE = '.heart-big.active';
+    this.SMALL_HEART_SELECTOR_VISIBLE = '.heart-small.active';
   }
 
+  /*
+  This function adds different number of enemies with different max speed once the difficulty has been selected by the user.
+  */
   addEnemies(){
     const difficulty = parseInt(document.getElementById('range').value);
     for (let i=0; i < difficulty * 3; i++) {
@@ -173,19 +171,33 @@ class Game {
   }
 
   showLivesMenu() {
-    this.player.blockMovement(); //block key input handling when menu is visible so users can't play blindfolded
-    this.player.die(); //decrement player lives
-    document.getElementById('lives-screen').classList.add('visible'); //show main lives screen
-    if (this.player.getLivesCount() === 0) {  //if it's game over already
+    document.getElementById('lives-screen').classList.add('visible');
+  }
+
+  hideLivesMenu() {
+    document.getElementById('lives').classList.remove('visible'); //hide top lives menu
+  }
+
+  /*
+    This function shows the
+    number of hero lives left once collision occurs or shows game over in case no more hero lives left
+  */
+  showDeadScreen() {
+    this.player.blockMovement();
+    this.player.die();
+    this.showLivesMenu();
+    if (this.player.getLivesCount() === 0) {  //if it is a game over already
       this.showGameOverScreen();
     } else {
-      this.adjustLivesCountInMenu(); //hide lives in game menus
-      document.getElementById('lives').classList.remove('visible'); //hide top lives menu
-      this.continueGame(); //show new live count and continue game
+      this.adjustLivesCountInMenu();
+      this.hideLivesMenu();
+      this.continueGame();
     }
   }
 
-
+ /*
+ Subtract lives in menus when hero dies
+ */
   adjustLivesCountInMenu() {
     const BIG_HEART_SELECTOR_VISIBLE = '.heart-big.active';
     const SMALL_HEART_SELECTOR_VISIBLE = '.heart-small.active';
@@ -194,9 +206,11 @@ class Game {
     document.getElementById('lives').querySelector(SMALL_HEART_SELECTOR_VISIBLE).classList.replace('active','invisible'); //remove heart from small lives screen
   }
 
+/* Adjust lives number in menu back */
   resetLivesInMenus(){
+
     const BIG_HEART_SELECTOR_INVISIBLE = '.heart-big.invisible';
-    const SMALL_HEART_SELECTOR_INVISIBLE = '.heart-small.invisible';
+    const SMALL_HEART_SELECTOR_INVISIBLE = '.heart-small.invisible'
 
     let bigHeartsInvisible = document.getElementById('lives-screen').querySelectorAll(BIG_HEART_SELECTOR_INVISIBLE);
     let smallHeartsInvisible = document.getElementById('lives').querySelectorAll(SMALL_HEART_SELECTOR_INVISIBLE);
@@ -209,7 +223,6 @@ class Game {
     }
   }
 
-
   showGameOverScreen() {
     document.getElementById('lives').classList.remove('visible'); //hide top lives menu
     document.getElementById('lives-screen').querySelector('.alive-menu').classList.add('invisible');
@@ -221,6 +234,7 @@ class Game {
     } , 2000)
   }
 
+/* This just hides the lives menu and shows game field*/
   continueGame() {
     setTimeout( () => {
       document.getElementById('lives-screen').classList.remove('visible');
@@ -229,6 +243,7 @@ class Game {
     } , 2000)
   }
 
+/*This will show congrats screen when player wins*/
   showCongratsScreen() {
     this.player.blockMovement();
     document.getElementById('lives').classList.remove('visible');
@@ -250,17 +265,17 @@ class Game {
   }
 
   startGame() {
-    this.addEnemies(); //initiate enemies
-    this.hideStartMenu(); // hide main game menu
+    this.addEnemies();
+    this.hideStartMenu();
     this.player.allowMovement();
   }
 
   selectHero(obj) {
     document.querySelector('.hero-avatar.selected').classList.remove('selected');
-    obj.classList.add('selected');
+    obj.classList.add('selected'); //highlight new hero
     const heroSrc = document.querySelector('.selected').getAttribute('src');
     this.getPlayer().setSprite(heroSrc);
-    document.getElementById('lives-screen').querySelector('.hero').setAttribute('src', heroSrc);
+    document.getElementById('lives-screen').querySelector('.hero').setAttribute('src', heroSrc); //update hero image in lives screen as well
   }
 }
 

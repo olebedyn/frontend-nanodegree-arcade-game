@@ -104,7 +104,7 @@ var Engine = (function(global) {
         game.getEnemies().forEach(function(enemy) {
           if ((Math.abs(enemy.x - player.getX()) < 50) && (Math.abs(enemy.y - player.getY())) < 50) {
             player.reset() // if collision occurs
-            game.showLivesMenu(); //show menu with remaining hero lives
+            game.showDeadScreen(); //show menu with remaining hero lives
           }
         });
       }
