@@ -103,7 +103,7 @@ var Engine = (function(global) {
       if (player.getY() > 0) { //if player hasn't reached the top yet
         game.getEnemies().forEach(function(enemy) {
           if ((Math.abs(enemy.x - player.getX()) < 50) && (Math.abs(enemy.y - player.getY())) < 50) {
-            player.reset() // if collision occurs
+            player.reset()
             game.showDeadScreen(); //show menu with remaining hero lives
           }
         });
@@ -111,7 +111,7 @@ var Engine = (function(global) {
     }
 
     function checkIfWon() {
-      if (game.getPlayer().getY() === 0) { //show congrats screen if hero reached the top
+      if (game.getPlayer().getY() === 0) {
         game.showCongratsScreen();
       }
     }

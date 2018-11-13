@@ -129,25 +129,22 @@ class Game {
   constructor() {
     this.player = new Player();
     this.enemies = [];
-    this.START_MENU_ID = 'overlay';
-    this.GAME_DIFFICULTY_ID = 'range';
-    this.TOP_LIVES_MENU_ID = 'lives';
-    this.SCREEN_LIVES_MENU_ID = 'lives-screen';
-    this.ALIVE_MENU_ID = 'lives-screen';
-    this.DEAD_MENU_ID = 'lives-screen';
-    this.WON_MENU_ID = 'lives-screen';
-    this.BIG_HEART_SELECTOR_INVISIBLE = '.heart-big.invisible';
-    this.SMALL_HEART_SELECTOR_INVISIBLE = '.heart-small.invisible';
-    this.BIG_HEART_SELECTOR_VISIBLE = '.heart-big.active';
-    this.SMALL_HEART_SELECTOR_VISIBLE = '.heart-small.active';
+
+    //menu elements
+    this.startMenu = document.getElementById('overlay');
+    this.gameDifficulty = document.getElementById('range');
+    this.topLivesMenu = document.getElementById('lives');
+    this.livesMenu = document.getElementById('lives-screen');
+    this.aliveMenu = document.getElementById('alive-menu');
+    this.deadMenu = document.getElementById('dead-menu');
+    this.wonMenu = document.getElementById('won-menu');
   }
 
   /*
   This function adds different number of enemies with different max speed once the difficulty has been selected by the user.
   */
   addEnemies(){
-    const difficulty = parseInt(document.getElementById('range').value);
-    for (let i=0; i < difficulty * 3; i++) {
+    for (let i=0; i < parseInt(this.gameDifficulty.value) * 3; i++) {
       this.enemies.push(new Enemy(difficulty * 2));
     }
   }
@@ -161,21 +158,23 @@ class Game {
   }
 
   hideStartMenu() {
-    document.getElementById('overlay').classList.remove('visible');
-    document.getElementById('lives').classList.add('visible');
+    this.startMenu.classList.remove('visible');
+    this.topLivesMenu.classList.add('visible');
   }
 
   showStartMenu() {
-    document.getElementById('overlay').classList.add('visible');
-    document.getElementById('lives').classList.remove('visible');
+    this.startMenu.classList.add('visible');
+    this.topLivesMenu.classList.remove('visible');
   }
 
   showLivesMenu() {
-    document.getElementById('lives-screen').classList.add('visible');
+    this.livesMenu.classList.add('visible');
+    this.topLivesMenu.classList.add('invisible');
   }
 
   hideLivesMenu() {
-    document.getElementById('lives').classList.remove('visible'); //hide top lives menu
+    this.livesMenu.classList.remove('visible');
+    this.topLivesMenu.classList.remove('invisible');
   }
 
   /*
@@ -202,18 +201,17 @@ class Game {
     const BIG_HEART_SELECTOR_VISIBLE = '.heart-big.active';
     const SMALL_HEART_SELECTOR_VISIBLE = '.heart-small.active';
 
-    document.getElementById('lives-screen').querySelector(BIG_HEART_SELECTOR_VISIBLE).classList.replace('active','invisible'); //remove heart from big lives screen
-    document.getElementById('lives').querySelector(SMALL_HEART_SELECTOR_VISIBLE).classList.replace('active','invisible'); //remove heart from small lives screen
+    this.livesMenu.querySelector(BIG_HEART_SELECTOR_VISIBLE).classList.replace('active','invisible'); //remove heart from big lives screen
+    this.topLivesMenu.querySelector(SMALL_HEART_SELECTOR_VISIBLE).classList.replace('active','invisible'); //remove heart from small lives screen
   }
 
 /* Adjust lives number in menu back */
   resetLivesInMenus(){
-
     const BIG_HEART_SELECTOR_INVISIBLE = '.heart-big.invisible';
     const SMALL_HEART_SELECTOR_INVISIBLE = '.heart-small.invisible'
 
-    let bigHeartsInvisible = document.getElementById('lives-screen').querySelectorAll(BIG_HEART_SELECTOR_INVISIBLE);
-    let smallHeartsInvisible = document.getElementById('lives').querySelectorAll(SMALL_HEART_SELECTOR_INVISIBLE);
+    let bigHeartsInvisible = this.livesMenu.querySelectorAll(BIG_HEART_SELECTOR_INVISIBLE);
+    let smallHeartsInvisible = this.topLivesMenu.querySelectorAll(SMALL_HEART_SELECTOR_INVISIBLE);
 
     for (let bigHeart of bigHeartsInvisible) {
       bigHeart.classList.replace('invisible', 'active');
@@ -224,12 +222,12 @@ class Game {
   }
 
   showGameOverScreen() {
-    document.getElementById('lives').classList.remove('visible'); //hide top lives menu
-    document.getElementById('lives-screen').querySelector('.alive-menu').classList.add('invisible');
-    document.getElementById('lives-screen').querySelector('.dead-menu').classList.replace('invisible', 'visible');
+    this.topLivesMenu.classList.remove('visible'); //hide top lives menu
+    this.aliveMenu.classList.add('invisible');
+    this.deadMenu.classList.replace('invisible', 'visible');
     setTimeout( () => {
-      document.getElementById('lives-screen').classList.remove('visible');
-      document.getElementById('lives-screen').querySelector('.dead-menu').classList.replace('visible', 'invisible');
+      this.livesMenu.classList.remove('visible');
+      this.deadMenu.classList.replace('visible', 'invisible');
       this.restartGame();
     } , 2000)
   }
@@ -237,8 +235,8 @@ class Game {
 /* This just hides the lives menu and shows game field*/
   continueGame() {
     setTimeout( () => {
-      document.getElementById('lives-screen').classList.remove('visible');
-      document.getElementById('lives').classList.add('visible');
+      this.livesMenu.classList.remove('visible');
+      this.topLivesMenu.classList.add('visible');
       this.player.allowMovement();
     } , 2000)
   }
@@ -246,10 +244,10 @@ class Game {
 /*This will show congrats screen when player wins*/
   showCongratsScreen() {
     this.player.blockMovement();
-    document.getElementById('lives').classList.remove('visible');
-    document.getElementById('won-menu').classList.replace('invisible', 'visible');
+    this.topLivesMenu.classList.remove('visible');
+    this.wonMenu.classList.replace('invisible', 'visible');
     setTimeout( () => {
-      document.getElementById('won-menu').classList.replace('visible', 'invisible');
+      this.wonMenu.classList.replace('visible', 'invisible');
       this.restartGame();
     } , 2000)
   }
@@ -260,8 +258,8 @@ class Game {
     this.adjustLivesCountInMenu(); // reset lives icons in menus
     this.showStartMenu();
     this.resetLivesInMenus();
-    document.getElementById('lives-screen').querySelector('.alive-menu').classList.remove('invisible');
-    document.getElementById('lives-screen').querySelector('.dead-menu').classList.replace('visible', 'invisible');
+    this.aliveMenu.classList.remove('invisible');
+    this.deadMenu.classList.replace('visible', 'invisible');
   }
 
   startGame() {
@@ -274,8 +272,8 @@ class Game {
     document.querySelector('.hero-avatar.selected').classList.remove('selected');
     obj.classList.add('selected'); //highlight new hero
     const heroSrc = document.querySelector('.selected').getAttribute('src');
-    this.getPlayer().setSprite(heroSrc);
-    document.getElementById('lives-screen').querySelector('.hero').setAttribute('src', heroSrc); //update hero image in lives screen as well
+    this.player.setSprite(heroSrc);
+    this.livesMenu.querySelector('.hero').setAttribute('src', heroSrc); //update hero image in lives screen as well
   }
 }
 
