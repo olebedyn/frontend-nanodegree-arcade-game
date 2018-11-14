@@ -9,53 +9,53 @@
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
-    <div class="lives" id="lives">
-      <img class="heart-small active" src="images/Heart.png">
-      <img class="heart-small active" src="images/Heart.png">
-      <img class="heart-small active" src="images/Heart.png">
+    <div class="lives-top-menu" id="lives-top-menu">
+      <img class="lives-top-menu__heart-small active" src="images/Heart.png">
+      <img class="lives-top-menu__heart-small active" src="images/Heart.png">
+      <img class="lives-top-menu__heart-small active" src="images/Heart.png">
     </div>
     <div class="lives-screen" id="lives-screen">
-      <div class="alive-menu" id="alive-menu">
-        <div class="item">
-          <img class="hero" src="images/char-cat-girl.png">
+      <div class="lives-screen__alive-menu" id="alive-menu">
+        <div class="lives-screen__item">
+          <img class="lives-screen__hero" src="images/char-cat-girl.png">
         </div>
-        <div class="item">
-          <p class="x-text">X</p>
+        <div class="lives-screen__item">
+          <p class="lives-screen__x-text">X</p>
         </div>
-        <div class="lives-item">
-          <img class="heart-big active" src="images/Heart.png">
-          <img class="heart-big active" src="images/Heart.png">
-          <img class="heart-big active" src="images/Heart.png">
+        <div class="lives-screen__lives-item">
+          <img class="lives-screen__heart-big active" src="images/Heart.png">
+          <img class="lives-screen__heart-big active" src="images/Heart.png">
+          <img class="lives-screen__heart-big active" src="images/Heart.png">
         </div>
       </div>
-      <div class="dead-menu invisible" id="dead-menu">
-        <p class="game-over">Game Over</p>
+      <div class="lives-screen__dead-menu invisible" id="dead-menu">
+        <p class="lives-screen__game-over">Game Over</p>
       </div>
     </div>
     <div class="won-screen invisible" id="won-menu">
-      <p class="game-over">Congratulations! You've are smarter than your enemies :)</p>
+      <p class="won-screen__game-over">Congratulations! You've are smarter than your enemies :)</p>
     </div>
-    <div class="overlay visible" id="overlay">
-      <div class="hero-list">
+    <div class="main-menu visible" id="main-menu">
+      <div class="main-menu__hero-list">
         <p>Select your hero:</p>
-        <div class="heros">
-          <div class="hero-avatar"><img class="hero-avatar selected" src="images/char-cat-girl.png" onclick="game.selectHero(this)"></div>
-          <div class="hero-avatar"><img class="hero-avatar" src="images/char-princess-girl.png" onclick="game.selectHero(this)"></div>
-          <div class="hero-avatar"><img class="hero-avatar" src="images/char-pink-girl.png" onclick="game.selectHero(this)"></div>
-          <div class="hero-avatar"><img class="hero-avatar" src="images/char-horn-girl.png" onclick="game.selectHero(this)"></div>
+        <div class="main-menu__heros">
+          <div class="main-menu__hero-avatar"><img class="main-menu__hero-avatar selected" src="images/char-cat-girl.png" onclick="game.selectHero(this)"></div>
+          <div class="main-menu__hero-avatar"><img class="main-menu__hero-avatar" src="images/char-princess-girl.png" onclick="game.selectHero(this)"></div>
+          <div class="main-menu__hero-avatar"><img class="main-menu__hero-avatar" src="images/char-pink-girl.png" onclick="game.selectHero(this)"></div>
+          <div class="main-menu__hero-avatar"><img class="main-menu__hero-avatar" src="images/char-horn-girl.png" onclick="game.selectHero(this)"></div>
         </div>
       </div>
-      <div class="difficulty-level">
+      <div class="main-menu__difficulty-level">
         <p>Select difficulty level:</p>
-        <input type="range" id='range' min="1" max="3" step="1" value="1">
-        <ul class="range-labels">
+        <input type="range" id="range" min="1" max="3" step="1" value="1">
+        <ul class="main-menu__range-labels">
           <li class="active selected">Easy</li>
           <li>Medium</li>
           <li>Hard</li>
         </ul>
       </div>
-      <div class="controls">
-          <button type="button" name="startGame" class="start-game" onclick="game.startGame()">Start Game</button>
+      <div class="main-menu__controls">
+          <button type="button" name="startGame" class="main-menu__start-game" onclick="game.startGame()">Start Game</button>
       </div>
     </div>
 </body>

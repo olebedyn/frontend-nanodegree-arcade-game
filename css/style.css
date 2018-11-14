@@ -1,8 +1,8 @@
 body {
-    text-align: center;
+  text-align: center;
 }
 
-.overlay {
+.main-menu {
   position: absolute;
   top: 50px;
   height: 550px;
@@ -19,24 +19,26 @@ body {
   font-size: 20px;
 }
 
-.hero-list, .difficulty-level, .controls {
+.main-menu__hero-list,
+.main-menu__difficulty-level,
+.main-menu__controls {
   width: 100%;
 }
 
-div.heros {
+div.main-menu__heros {
   display: flex;
 }
 
-div.hero-avatar {
+div.main-menu__hero-avatar {
   width: 25%;
   height: 130px;
 }
 
-img.hero-avatar {
+img.main-menu__hero-avatar {
   opacity: 0.5;
 }
 
-img.hero-avatar.selected {
+img.main-menu__hero-avatar.selected {
   opacity: 1;
 }
 
@@ -52,21 +54,21 @@ input#range {
   width: 50%;
 }
 
-ul.range-labels {
-    list-style-type: none;
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 3px;
-    padding: 0;
-    width: 75%;
+ul.main-menu__range-labels {
+  list-style-type: none;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3px;
+  padding: 0;
+  width: 75%;
 }
 
-ul.range-labels > li {
+ul.main-menu__range-labels > li {
   width: 33.3%;
 }
 
-.start-game {
+.main-menu__start-game {
   height: 50px;
   width: 100px;
   border-radius: 5%;
@@ -74,7 +76,7 @@ ul.range-labels > li {
   font-size: 14px;
 }
 
-.lives {
+.lives-top-menu {
   background-color: black;
   top: 12px;
   height: 50px;
@@ -87,7 +89,8 @@ ul.range-labels > li {
   visibility: hidden;
 }
 
-.lives-screen, .won-screen {
+.lives-screen,
+.won-screen {
   position: absolute;
   top: 50px;
   height: 550px;
@@ -104,7 +107,7 @@ ul.range-labels > li {
 }
 
 .lives-screen {
-    background-color: black;
+  background-color: black;
 }
 
 .won-screen {
@@ -112,7 +115,7 @@ ul.range-labels > li {
   color: white;
 }
 
-.alive-menu {
+.lives-screen__alive-menu {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -120,36 +123,37 @@ ul.range-labels > li {
   position: absolute;
 }
 
-.dead-menu {
+.lives-screen__dead-menu {
   position: absolute;
 }
 
-.won-menu {
+.won-screen {
   background-color: pink;
-  color: black;
 }
 
-.lives-item {
+.lives-screen__lives-item {
   display: flex;
   flex-direction: row;
 }
 
-.heart-small {
+.lives-top-menu__heart-small {
   width: 50px;
   height: 50px;
 }
 
-.heart-big {
+.lives-screen__heart-big {
   width: 70px;
   height: 70px;
 }
 
-.hero {
+.lives-screen__hero {
   width: 101px;
   height: 171px;
 }
 
-.x-text, .game-over {
+.lives-screen__x-text,
+.lives-screen__game-over,
+.won-screen__game-over {
   font-size: 25px;
   color: white;
 }
