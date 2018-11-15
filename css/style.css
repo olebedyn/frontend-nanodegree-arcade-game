@@ -16,7 +16,8 @@ body {
   display: flex;
   flex-wrap: wrap;
   color: white;
-  font-size: 20px;
+  font-size: 14px;
+  font-family: 'MinecraftiaRegular';
 }
 
 .main-menu__hero-list,
@@ -74,6 +75,7 @@ ul.main-menu__range-labels > li {
   border-radius: 5%;
   background-color: white;
   font-size: 14px;
+  font-family: 'MinecraftiaRegular';
 }
 
 .lives-top-menu {
@@ -156,4 +158,5 @@ ul.main-menu__range-labels > li {
 .won-screen__game-over {
   font-size: 25px;
   color: white;
+  font-family: 'MinecraftiaRegular';
 }

@@ -43,10 +43,14 @@ class Player {
     return this.x;
   }
 
-  reset() {
+  /*
+  * Reset player's position and live count in case it's a game over or player
+  * won a game
+  */
+  reset(isGameWon) {
     this.x = this.initX();
     this.y = this.initY();
-    if (this.lives === 0) {
+    if (this.lives === 0 || isGameWon) {
       this.lives = 3;
     }
   }
@@ -81,10 +85,16 @@ class Player {
     this.render();
   }
 
+  /*
+  * Disable keyborad controls
+  */
   blockMovement() {
     document.removeEventListener("keyup", this.movementHandler);
   }
 
+  /*
+  * Enable keyborad controls
+  */
   allowMovement() {
     document.addEventListener("keyup", this.movementHandler);
   }
@@ -130,10 +140,15 @@ class Game {
   constructor() {
     this.player = new Player();
     this.enemies = [];
+    this.initMenuElements = this.initElements.bind(this);
+    document.addEventListener("DOMContentLoaded", this.initMenuElements);
   }
 
+  /*
+  * Initiate menu elements in class once the DOM is loaded
+  * and then re-use to control game flow.
+  */
   initElements() {
-    console.info("DOM loaded");
     this.startMenu = document.getElementById("main-menu");
     this.gameDifficulty = document.getElementById("range");
     this.topLivesMenu = document.getElementById("lives-top-menu");
@@ -143,8 +158,10 @@ class Game {
     this.wonMenu = document.getElementById("won-menu");
   }
 
-  /*  This function adds different number of enemies with different max speed once the difficulty
-  has been selected by the user.*/
+  /*
+  * This function adds different number of enemies with different max speed
+  * once the difficulty has been selected by the user.
+  */
   addEnemies() {
     const difficulty = parseInt(this.gameDifficulty.value);
 
@@ -163,27 +180,27 @@ class Game {
 
   hideStartMenu() {
     this.startMenu.classList.remove("visible");
-    this.topLivesMenu.classList.add("visible");
+    this.topLivesMenu.classList.replace("invisible", "visible");
   }
 
   showStartMenu() {
     this.startMenu.classList.add("visible");
-    this.topLivesMenu.classList.remove("visible");
+    this.topLivesMenu.classList.replace("visible", "invisible");
   }
 
   showLivesMenu() {
-    this.livesMenu.classList.add("visible");
-    this.topLivesMenu.classList.add("invisible");
+    this.livesMenu.classList.replace("invisible", "visible");
+    this.topLivesMenu.classList.replace("visible", "invisible");
   }
 
   hideLivesMenu() {
-    this.livesMenu.classList.remove("visible");
-    this.topLivesMenu.classList.remove("invisible");
+    this.livesMenu.classList.replace("visible", "invisible");
+    this.topLivesMenu.classList.replace("invisible", "visible");
   }
 
   /*
-    This function shows the
-    number of hero lives left once collision occurs or shows game over in case no more hero lives left
+  * This function shows the number of hero lives left once collision occurs or
+  * shows game over screen in case no more hero lives left
   */
   showDeadScreen() {
     this.player.blockMovement();
@@ -201,8 +218,8 @@ class Game {
   }
 
   /*
- Subtract lives in menus when hero dies*/
-
+  * This function hides additional lives in menus when hero dies.
+  */
   adjustLivesCountInMenu() {
     const BIG_HEART_SELECTOR_VISIBLE = ".lives-screen__heart-big.active";
     const SMALL_HEART_SELECTOR_VISIBLE = ".lives-top-menu__heart-small.active";
@@ -215,7 +232,9 @@ class Game {
       .classList.replace("active", "invisible"); // remove heart from small lives screen
   }
 
-  /* Adjust lives number in menu back */
+  /*
+  * This function resets lives in menus to initial state.
+  */
   resetLivesInMenus() {
     const BIG_HEART_SELECTOR_INVISIBLE = ".lives-screen__heart-big.invisible";
     const SMALL_HEART_SELECTOR_INVISIBLE =
@@ -237,29 +256,32 @@ class Game {
   }
 
   showGameOverScreen() {
-    this.topLivesMenu.classList.remove("visible"); // hide top lives menu
+    this.topLivesMenu.classList.replace("visible", "invisible");
     this.aliveMenu.classList.add("invisible");
     this.deadMenu.classList.replace("invisible", "visible");
-    setTimeout(() => {
-      this.livesMenu.classList.remove("visible");
+    setTimeout(() => {  // wait for a few seconds and then hide the screen
+      this.livesMenu.classList.replace("visible", "invisible");
       this.deadMenu.classList.replace("visible", "invisible");
       this.restartGame();
-    }, 2000);
+    }, 2000)
+    ;
   }
 
-  /* This will show congrats screen when player wins */
   showCongratsScreen() {
     this.player.blockMovement();
-    this.topLivesMenu.classList.remove("visible");
+    this.topLivesMenu.classList.replace("visible", "invisible");
     this.wonMenu.classList.replace("invisible", "visible");
-    setTimeout(() => {
+    setTimeout(() => { // wait for a few seconds and then hide the screen
       this.wonMenu.classList.replace("visible", "invisible");
-      this.restartGame();
+      this.restartGame(true);
     }, 2000);
   }
 
-  restartGame() {
-    this.player.reset(); // reset player
+  /*
+  * This function resets all the game parameters to the inital values.
+  */
+  restartGame(isGameWon = false) {
+    this.player.reset(isGameWon); // reset player
     this.enemies = []; // cleanup enemies
     this.adjustLivesCountInMenu(); // reset lives icons in menus
     this.showStartMenu();
@@ -268,12 +290,18 @@ class Game {
     this.deadMenu.classList.replace("visible", "invisible");
   }
 
+  /*
+  * This function is an entry point to the game.
+  */
   startGame() {
     this.addEnemies();
     this.hideStartMenu();
     this.player.allowMovement();
   }
 
+  /*
+  * This function controls hero sprite selection on star menu screen.
+  */
   selectHero(obj) {
     document
       .querySelector(".main-menu__hero-avatar.selected")
@@ -291,4 +319,3 @@ class Game {
 
 // Wrapping enemies and player into a game class object so it's easier to control game flow with all the screens that appear in-between. This also make the flow in the engine more readable and easier to change if needed
 const game = new Game();
-document.addEventListener("DOMContentLoaded", game.initElements.bind(game));
