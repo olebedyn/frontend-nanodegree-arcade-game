@@ -4,11 +4,14 @@ function getRandomInt(min, max) {
 
 class Player {
   constructor() {
-    this.sprite = "images/char-cat-girl.png";
+    this.sprite = 'images/char-cat-girl.png';
     this.x = this.initX();
     this.y = this.initY();
     this.lives = 3;
-    this.movementHandler = this.handleInput.bind(this); // define handler explicitly so it's possible to remove it later on when menu is shown
+
+    /* define handler explicitly so it's possible to remove it
+    later on when menu is shown */
+    this.movementHandler = this.handleInput.bind(this);
   }
 
   setSprite(sprite) {
@@ -61,24 +64,24 @@ class Player {
 
   handleInput(e) {
     const allowedKeys = {
-      37: "left",
-      38: "up",
-      39: "right",
-      40: "down"
+      37: 'left',
+      38: 'up',
+      39: 'right',
+      40: 'down'
     };
     const keyCode = allowedKeys[e.keyCode];
 
     switch (keyCode) {
-      case "left":
+      case 'left':
         this.x = this.x - 101 < 0 ? this.x : this.x - 101;
         break;
-      case "up":
+      case 'up':
         this.y = this.y - 83 < 0 ? this.y : this.y - 83;
         break;
-      case "right":
+      case 'right':
         this.x = this.x + 101 >= ctx.canvas.width ? this.x : this.x + 101;
         break;
-      case "down":
+      case 'down':
         this.y = this.y + 83 >= 420 ? this.y : this.y + 83;
         break;
     }
@@ -89,20 +92,20 @@ class Player {
   * Disable keyborad controls
   */
   blockMovement() {
-    document.removeEventListener("keyup", this.movementHandler);
+    document.removeEventListener('keyup', this.movementHandler);
   }
 
   /*
   * Enable keyborad controls
   */
   allowMovement() {
-    document.addEventListener("keyup", this.movementHandler);
+    document.addEventListener('keyup', this.movementHandler);
   }
 }
 
 class Enemy {
   constructor(maxSpeed) {
-    this.sprite = "images/enemy-bug.png";
+    this.sprite = 'images/enemy-bug.png';
     this.x = this.initX();
     this.y = this.initY();
     this.maxSpeed = maxSpeed;
@@ -141,7 +144,7 @@ class Game {
     this.player = new Player();
     this.enemies = [];
     this.initMenuElements = this.initElements.bind(this);
-    document.addEventListener("DOMContentLoaded", this.initMenuElements);
+    document.addEventListener('DOMContentLoaded', this.initMenuElements);
   }
 
   /*
@@ -149,13 +152,13 @@ class Game {
   * and then re-use to control game flow.
   */
   initElements() {
-    this.startMenu = document.getElementById("main-menu");
-    this.gameDifficulty = document.getElementById("range");
-    this.topLivesMenu = document.getElementById("lives-top-menu");
-    this.livesMenu = document.getElementById("lives-screen");
-    this.aliveMenu = document.getElementById("alive-menu");
-    this.deadMenu = document.getElementById("dead-menu");
-    this.wonMenu = document.getElementById("won-menu");
+    this.startMenu = document.getElementById('main-menu');
+    this.gameDifficulty = document.getElementById('range');
+    this.topLivesMenu = document.getElementById('lives-top-menu');
+    this.livesMenu = document.getElementById('lives-screen');
+    this.aliveMenu = document.getElementById('alive-menu');
+    this.deadMenu = document.getElementById('dead-menu');
+    this.wonMenu = document.getElementById('won-menu');
   }
 
   /*
@@ -165,7 +168,7 @@ class Game {
   addEnemies() {
     const difficulty = parseInt(this.gameDifficulty.value);
 
-    for (let i = 0; i <  difficulty * 3; i++) {
+    for (let i = 0; i < difficulty * 3; i++) {
       this.enemies.push(new Enemy(difficulty * 2));
     }
   }
@@ -179,23 +182,23 @@ class Game {
   }
 
   hideStartMenu() {
-    this.startMenu.classList.remove("visible");
-    this.topLivesMenu.classList.replace("invisible", "visible");
+    this.startMenu.classList.remove('visible');
+    this.topLivesMenu.classList.replace('invisible', 'visible');
   }
 
   showStartMenu() {
-    this.startMenu.classList.add("visible");
-    this.topLivesMenu.classList.replace("visible", "invisible");
+    this.startMenu.classList.add('visible');
+    this.topLivesMenu.classList.replace('visible', 'invisible');
   }
 
   showLivesMenu() {
-    this.livesMenu.classList.replace("invisible", "visible");
-    this.topLivesMenu.classList.replace("visible", "invisible");
+    this.livesMenu.classList.replace('invisible', 'visible');
+    this.topLivesMenu.classList.replace('visible', 'invisible');
   }
 
   hideLivesMenu() {
-    this.livesMenu.classList.replace("visible", "invisible");
-    this.topLivesMenu.classList.replace("invisible", "visible");
+    this.livesMenu.classList.replace('visible', 'invisible');
+    this.topLivesMenu.classList.replace('invisible', 'visible');
   }
 
   /*
@@ -221,24 +224,23 @@ class Game {
   * This function hides additional lives in menus when hero dies.
   */
   adjustLivesCountInMenu() {
-    const BIG_HEART_SELECTOR_VISIBLE = ".lives-screen__heart-big.active";
-    const SMALL_HEART_SELECTOR_VISIBLE = ".lives-top-menu__heart-small.active";
+    const BIG_HEART_SELECTOR_VISIBLE = '.lives-screen__heart-big.active';
+    const SMALL_HEART_SELECTOR_VISIBLE = '.lives-top-menu__heart-small.active';
 
     this.livesMenu
       .querySelector(BIG_HEART_SELECTOR_VISIBLE)
-      .classList.replace("active", "invisible"); // remove heart from big lives screen
+      .classList.replace('active', 'invisible'); // remove heart from big lives screen
     this.topLivesMenu
       .querySelector(SMALL_HEART_SELECTOR_VISIBLE)
-      .classList.replace("active", "invisible"); // remove heart from small lives screen
+      .classList.replace('active', 'invisible'); // remove heart from small lives screen
   }
 
   /*
   * This function resets lives in menus to initial state.
   */
   resetLivesInMenus() {
-    const BIG_HEART_SELECTOR_INVISIBLE = ".lives-screen__heart-big.invisible";
-    const SMALL_HEART_SELECTOR_INVISIBLE =
-      ".lives-top-menu__heart-small.invisible";
+    const BIG_HEART_SELECTOR_INVISIBLE = '.lives-screen__heart-big.invisible';
+    const SMALL_HEART_SELECTOR_INVISIBLE = '.lives-top-menu__heart-small.invisible';
 
     const bigHeartsInvisible = this.livesMenu.querySelectorAll(
       BIG_HEART_SELECTOR_INVISIBLE
@@ -248,31 +250,30 @@ class Game {
     );
 
     for (const bigHeart of bigHeartsInvisible) {
-      bigHeart.classList.replace("invisible", "active");
+      bigHeart.classList.replace('invisible', 'active');
     }
     for (const smallHeart of smallHeartsInvisible) {
-      smallHeart.classList.replace("invisible", "active");
+      smallHeart.classList.replace('invisible', 'active');
     }
   }
 
   showGameOverScreen() {
-    this.topLivesMenu.classList.replace("visible", "invisible");
-    this.aliveMenu.classList.add("invisible");
-    this.deadMenu.classList.replace("invisible", "visible");
-    setTimeout(() => {  // wait for a few seconds and then hide the screen
-      this.livesMenu.classList.replace("visible", "invisible");
-      this.deadMenu.classList.replace("visible", "invisible");
+    this.topLivesMenu.classList.replace('visible', 'invisible');
+    this.aliveMenu.classList.add('invisible');
+    this.deadMenu.classList.replace('invisible', 'visible');
+    setTimeout(() => { // wait for a few seconds and then hide the screen
+      this.livesMenu.classList.replace('visible', 'invisible');
+      this.deadMenu.classList.replace('visible', 'invisible');
       this.restartGame();
-    }, 2000)
-    ;
+    }, 2000);
   }
 
   showCongratsScreen() {
     this.player.blockMovement();
-    this.topLivesMenu.classList.replace("visible", "invisible");
-    this.wonMenu.classList.replace("invisible", "visible");
+    this.topLivesMenu.classList.replace('visible', 'invisible');
+    this.wonMenu.classList.replace('invisible', 'visible');
     setTimeout(() => { // wait for a few seconds and then hide the screen
-      this.wonMenu.classList.replace("visible", "invisible");
+      this.wonMenu.classList.replace('visible', 'invisible');
       this.restartGame(true);
     }, 2000);
   }
@@ -286,8 +287,8 @@ class Game {
     this.adjustLivesCountInMenu(); // reset lives icons in menus
     this.showStartMenu();
     this.resetLivesInMenus();
-    this.aliveMenu.classList.remove("invisible");
-    this.deadMenu.classList.replace("visible", "invisible");
+    this.aliveMenu.classList.remove('invisible');
+    this.deadMenu.classList.replace('visible', 'invisible');
   }
 
   /*
@@ -304,12 +305,13 @@ class Game {
   */
   selectHero(obj) {
     document
-      .querySelector(".main-menu__hero-avatar.selected")
-      .classList.remove("selected");
-    obj.classList.add("selected"); // highlight new hero
-    const heroSrc = document.querySelector(".selected").getAttribute("src");
+      .querySelector('.main-menu__hero-avatar.selected')
+      .classList.remove('selected');
+    obj.classList.add('selected'); // highlight new hero
+    const heroSrc = document.querySelector('.selected').getAttribute('src');
     this.player.setSprite(heroSrc);
-    this.livesMenu.querySelector(".lives-screen__hero").setAttribute("src", heroSrc); // update hero image in lives screen as well
+    // update hero image in lives screen as well
+    this.livesMenu.querySelector('.lives-screen__hero').setAttribute('src', heroSrc);
   }
 }
 
@@ -317,5 +319,7 @@ class Game {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-// Wrapping enemies and player into a game class object so it's easier to control game flow with all the screens that appear in-between. This also make the flow in the engine more readable and easier to change if needed
+// Wrapping enemies and player into a game class object so it's easier to control
+//game flow with all the screens that appear in-between.
+// This also make the flow in the engine more readable and easier to change if needed
 const game = new Game();

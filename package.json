@@ -1,0 +1,25 @@
+{
+  "name": "frontend-nanodegree-arcade-game-master",
+  "version": "1.0.0",
+  "description": "Arcade game for udacity's fe nanodegree",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olebedyn/frontend-nanodegree-arcade-game.git"
+  },
+  "author": "Oleg Lebedyn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olebedyn/frontend-nanodegree-arcade-game/issues"
+  },
+  "homepage": "https://github.com/olebedyn/frontend-nanodegree-arcade-game#readme"
+}
