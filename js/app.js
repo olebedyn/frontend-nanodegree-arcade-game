@@ -182,23 +182,23 @@ class Game {
   }
 
   hideStartMenu() {
-    this.startMenu.classList.remove('visible');
-    this.topLivesMenu.classList.replace('invisible', 'visible');
+    this.startMenu.classList.add('invisible');
+    this.topLivesMenu.classList.remove('invisible');
   }
 
   showStartMenu() {
-    this.startMenu.classList.add('visible');
-    this.topLivesMenu.classList.replace('visible', 'invisible');
+    this.startMenu.classList.remove('invisible');
+    this.topLivesMenu.classList.add('invisible');
   }
 
   showLivesMenu() {
-    this.livesMenu.classList.replace('invisible', 'visible');
-    this.topLivesMenu.classList.replace('visible', 'invisible');
+    this.livesMenu.classList.remove('invisible');
+    this.topLivesMenu.classList.add('invisible');
   }
 
   hideLivesMenu() {
-    this.livesMenu.classList.replace('visible', 'invisible');
-    this.topLivesMenu.classList.replace('invisible', 'visible');
+    this.livesMenu.classList.add('invisible');
+    this.topLivesMenu.classList.remove('invisible');
   }
 
   /*
@@ -258,22 +258,23 @@ class Game {
   }
 
   showGameOverScreen() {
-    this.topLivesMenu.classList.replace('visible', 'invisible');
+    this.topLivesMenu.classList.add('invisible');
     this.aliveMenu.classList.add('invisible');
-    this.deadMenu.classList.replace('invisible', 'visible');
+    this.deadMenu.classList.remove('invisible');
     setTimeout(() => { // wait for a few seconds and then hide the screen
-      this.livesMenu.classList.replace('visible', 'invisible');
-      this.deadMenu.classList.replace('visible', 'invisible');
+      this.livesMenu.classList.add('invisible');
+      this.deadMenu.classList.add('invisible');
+      this.aliveMenu.classList.remove('invisible');
       this.restartGame();
     }, 2000);
   }
 
   showCongratsScreen() {
     this.player.blockMovement();
-    this.topLivesMenu.classList.replace('visible', 'invisible');
-    this.wonMenu.classList.replace('invisible', 'visible');
+    this.topLivesMenu.classList.add('invisible');
+    this.wonMenu.classList.remove('invisible');
     setTimeout(() => { // wait for a few seconds and then hide the screen
-      this.wonMenu.classList.replace('visible', 'invisible');
+      this.wonMenu.classList.add('invisible');
       this.restartGame(true);
     }, 2000);
   }
@@ -287,8 +288,6 @@ class Game {
     this.adjustLivesCountInMenu(); // reset lives icons in menus
     this.showStartMenu();
     this.resetLivesInMenus();
-    this.aliveMenu.classList.remove('invisible');
-    this.deadMenu.classList.replace('visible', 'invisible');
   }
 
   /*

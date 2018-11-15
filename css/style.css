@@ -12,7 +12,6 @@ body {
   margin-right: auto;
   left: 0;
   right: 0;
-  visibility: hidden;
   display: flex;
   flex-wrap: wrap;
   color: white;
@@ -41,10 +40,6 @@ img.main-menu__hero-avatar {
 
 img.main-menu__hero-avatar.selected {
   opacity: 1;
-}
-
-.visible {
-  visibility: visible !important;
 }
 
 .invisible {
@@ -88,7 +83,6 @@ ul.main-menu__range-labels > li {
   right: 0;
   margin-left: auto;
   margin-right: auto;
-  visibility: hidden;
 }
 
 .lives-screen,
@@ -101,7 +95,6 @@ ul.main-menu__range-labels > li {
   margin-right: auto;
   left: 0;
   right: 0;
-  visibility: hidden;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -127,10 +120,6 @@ ul.main-menu__range-labels > li {
 
 .lives-screen__dead-menu {
   position: absolute;
-}
-
-.won-screen {
-  background-color: pink;
 }
 
 .lives-screen__lives-item {
